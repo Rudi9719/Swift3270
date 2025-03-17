@@ -46,19 +46,16 @@ struct ContentView: View {
 
     private func openSession() {
         withAnimation {
-            print("Launching connection")
             
             let newHost = HostSettings(timestamp: Date(), hostname: "planet.sdf.org", port: 24)
             newHost.nickname = "SDFVM"
-            print("getting host connection")
             let testC = newHost.getConnection()
             do {
-                print("Entering try")
                try testC.start()
+                
             } catch let e {
                 print("Could not connect: \(e)")
             }
-            print("passing try")
             modelContext.insert(newHost)
         }
     }

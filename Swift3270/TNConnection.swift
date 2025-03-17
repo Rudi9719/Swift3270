@@ -17,8 +17,6 @@ class TNConnection {
     private let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
     let host: String
     let port: Int
-    var inputStream: InputStream?
-    var outputStream: OutputStream?
     
     init(host: String, port: Int) {
         self.host = host
