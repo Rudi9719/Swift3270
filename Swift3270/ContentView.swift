@@ -10,16 +10,16 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query private var items: [HostSettings]
 
     var body: some View {
         NavigationSplitView {
             List {
                 ForEach(items) { item in
                     NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                        Text("Item at \(item.creationTimestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
                     } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        Text(item.nickname ?? item.hostName)
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -35,7 +35,7 @@ struct ContentView: View {
 #endif
                 ToolbarItem {
                     Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                        Label("Add Host", systemImage: "plus")
                     }
                 }
             }
@@ -46,8 +46,8 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
+            let newHost = HostSettings(timestamp: Date(), hostname: "planet.sdf.org", port: 24)
+            modelContext.insert(newHost)
         }
     }
 
