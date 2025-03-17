@@ -18,13 +18,16 @@ final class HostSettings {
     var model: Int = 4
     
     
-    
     init(timestamp: Date, hostname: String, port: Int = 3270, nickname: String? = nil) {
         self.creationTimestamp = timestamp
         self.hostName = hostname
         self.port = port
         self.nickname = nickname
         
+    }
+    
+    func getConnection() -> TNConnection {
+        return TNConnection(host: hostName, port: port)
     }
     
     

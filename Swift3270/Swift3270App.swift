@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct Swift3270App: App {
+    var sessions: [TNConnection] = []
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,

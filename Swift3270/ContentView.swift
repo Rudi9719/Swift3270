@@ -22,7 +22,7 @@ struct ContentView: View {
                         Text(item.nickname ?? item.hostName)
                     }
                 }
-                .onDelete(perform: deleteItems)
+                .onDelete(perform: closeSession)
             }
 #if os(macOS)
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
@@ -34,26 +34,39 @@ struct ContentView: View {
                 }
 #endif
                 ToolbarItem {
-                    Button(action: addItem) {
+                    Button(action: openSession) {
                         Label("Add Host", systemImage: "plus")
                     }
                 }
             }
         } detail: {
-            Text("Select an item")
+            Text("No Active Sessions")
         }
     }
 
-    private func addItem() {
+    private func openSession() {
         withAnimation {
+            print("Launching connection")
+            
             let newHost = HostSettings(timestamp: Date(), hostname: "planet.sdf.org", port: 24)
+            newHost.nickname = "SDFVM"
+            print("getting host connection")
+            let testC = newHost.getConnection()
+            do {
+                print("Entering try")
+               try testC.start()
+            } catch let e {
+                print("Could not connect: \(e)")
+            }
+            print("passing try")
             modelContext.insert(newHost)
         }
     }
 
-    private func deleteItems(offsets: IndexSet) {
+    private func closeSession(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
+                
                 modelContext.delete(items[index])
             }
         }
