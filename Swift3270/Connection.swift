@@ -8,8 +8,8 @@
 import Foundation
 
 class TNConnection {
-let host: String
-let port: Int
+var host: String
+var port: Int
 var inputStream: InputStream?
 var outputStream: OutputStream?
 

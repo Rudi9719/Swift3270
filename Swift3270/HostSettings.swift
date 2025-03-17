@@ -10,7 +10,6 @@ import SwiftData
 
 @Model
 final class HostSettings {
-    var connection: TNConnection
     var creationTimestamp: Date
     var hostName: String
     var nickname: String?
@@ -26,7 +25,6 @@ final class HostSettings {
         self.port = port
         self.nickname = nickname
         
-        connection = TNConnection(host: hostname, port: port)
     }
     
     
