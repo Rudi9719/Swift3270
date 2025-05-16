@@ -10,12 +10,11 @@ import SwiftData
 
 @main
 struct Swift3270App: App {
-    var sessions: [TNConnection] = []
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])

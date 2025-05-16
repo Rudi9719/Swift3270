@@ -10,19 +10,18 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [HostSettings]
+    @Query private var items: [Item]
 
     var body: some View {
         NavigationSplitView {
             List {
                 ForEach(items) { item in
                     NavigationLink {
-                        Text("Item at \(item.creationTimestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                        Text("Item")
                     } label: {
-                        Text(item.nickname ?? item.hostName)
+                        Text("\(item.timestamp)")
                     }
                 }
-                .onDelete(perform: closeSession)
             }
 #if os(macOS)
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
@@ -47,16 +46,6 @@ struct ContentView: View {
     private func openSession() {
         withAnimation {
             
-            let newHost = HostSettings(timestamp: Date(), hostname: "planet.sdf.org", port: 24)
-            newHost.nickname = "SDFVM"
-            let testC = newHost.getConnection()
-            do {
-               try testC.start()
-                
-            } catch let e {
-                print("Could not connect: \(e)")
-            }
-            modelContext.insert(newHost)
         }
     }
 
